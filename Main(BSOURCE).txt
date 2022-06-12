@@ -1,0 +1,849 @@
+[i]BUOY
+[i]Please Note: This game is made only for educational purposes and will not be sold.
+[i]Disclaimer: By installing this software you agree to take all responsibility for any damages, hardware and software, caused to your calculator.
+[i]--------------------------------------
+[i] Program Name: ESCAPE THE BUOY! CE
+[i] Author: OldNewTimer
+[i] Build: 1.0
+[i]--------------------------------------
+[i]VARIABLES
+[i]L1-Inventory
+[i]L1(1)=Broken Calc
+[i]L1(2)=Wire
+[i]L1(3)=Emergency Satellite Phone
+[i]L1(4)=Baking Soda
+[i]L1(5)=Makeshift Screwdriver (Quarter)
+[i]L1(6)=
+[i]L2-Completed Tasks
+[i]L2(1)-Fix Solar Panel
+[i]L2(2)-Fix SOS Button
+[i]L2(3)-Unscrew Panel
+[i]L2(4)-Find Emergency Phone
+[i]L2(5)-Fix Corroded Wires
+[i]L2(6)-Boot up computer via phone 
+[i]A-Getkey
+[i]B-Buffer
+[i]C-Buffer
+[i]K-Item Number
+[i]V-2ndXCoord
+[i]X-X Coord
+[i]Y-Y Coord
+[i]Z-2ndYCoord
+
+[i]==========Start the graphics and display the title screen==========
+CompilePrgm(BUOYG
+0->A->B->C->D->E->F->G->H->I->J->K->L->M->N->O->P->Q->R->S->T->U->V->X->Y->Z->L1(1)->L1(2)->L1(3)->L1(4)->L1(5)->L1(6)->L2(1)->L2(2)->L2(3)->L2(4)->L2(5)->L2(6)
+Begin
+[i]=========Show Logo=========
+Lbl LOGO
+det(5,0
+1->A
+51->B
+0->C
+det(5,255
+While B!=160
+det(2,255
+det(36,C,50,1,100
+det(2,224
+[i]110
+det(36,A,50,50,50
+det(2,60
+[i]160
+det(36,B,50,50,50
+det(2,239
+[i]110
+det(36,A,100,100,50
+A+1->A
+B+1->B
+C+1->C
+Pause 5
+End
+SetTextScale(2,2
+det(18,"OLDNEWTIMER PRESENTS",7,170
+Pause 1500
+[i]==========title screen==========
+Lbl TITLE
+0->A
+SetTextScale(2,2
+FillScreen(191
+SetColor(24
+FillRectangle_NoClip(0,200,320,40
+ScaledTransparentSprite_NoClip(1,190,146,3,3
+SetTextFGColor(224
+PrintStringXY("ESCAPE THE ",20,80
+SetTextScale(3,3
+PrintStringXY("BUOY!",20,100
+SetTextScale(1,1
+SetTextFGColor(0
+PrintStringXY("(C) 2017 OldNewTimer",20,135
+PrintStringXY("A CC:20 Project",20,145
+PrintStringXY("Press Enter to Start",20,155
+[i]==========Moving Clouds==========
+remainder(rand(31))->Y
+remainder(rand(31))->Z
+max(1,remainder(rand(3)))->B
+max(1,remainder(rand(3)))->C
+SetColor(191
+0->X+100->V
+While A!=9
+	FillRectangle(X-1,Y,1,30
+	FillRectangle(V-1,Z,1,30
+	ScaledSprite_NoClip(2,X,Y,B,B
+	ScaledSprite_NoClip(2,V,Z,C,C
+	X+1->X
+	V+1->V
+	getKey->A
+	If X>=320
+		0->X
+		FillRectangle(0,0,340,80
+	End
+	If V>=320
+		0->V
+		FillRectangle(0,0,340,80
+	End
+	Pause 20
+End
+[i]==========Selection Menu==========
+SetColor(24
+200->Y
+While Y>54
+	FillRectangle_NoClip(0,Y,320,240
+	ScaledTransparentSprite_NoClip(1,190,Y-54,3,3
+	Y-1->Y
+	Pause 2
+End
+87->Y
+FillScreen(24
+SetTextScale(3,3
+SetTextFGColor(223
+PrintStringXY("MENU",115,20
+SetTextScale(2,2
+SetTextFGColor(231
+PrintStringXY("START GAME",70,90
+SetTextFGColor(223
+PrintStringXY("EXIT",70,120
+0->A
+While A!=9
+	getKey->A
+	If A=4
+		87->Y
+		SetTextFGColor(231
+		PrintStringXY("START GAME",70,90
+		SetTextFGColor(223
+		PrintStringXY("EXIT",70,120
+		FillRectangle_NoClip(50,117,15,20
+	End
+	If A=1
+		117->Y
+		SetTextFGColor(223
+		PrintStringXY("START GAME",70,90
+		SetTextFGColor(231
+		PrintStringXY("EXIT",70,120
+		FillRectangle_NoClip(50,87,15,20
+	End
+	ScaledTransparentSprite_NoClip(1,50,Y,1,1
+End
+If Y=117
+	Goto STOP
+End
+[i]==========Exposition Dump==========
+0->A->B->C
+FillScreen(191
+SetColor(24
+FillRectangle_NoClip(0,200,320,40
+ScaledTransparentSprite_NoClip(0,10,145,2,2
+SetColor(247
+FillRectangle_NoClip(0,0,320,80
+SetTextFGColor(0
+SetTextScale(1,1
+PrintStringXY("CAPTAIN'S LOG - DAY 1",10,10
+PrintStringXY("USS Maguffin",10,20
+PrintStringXY("Departure has gone smoothly. All inventory",10,40
+PrintStringXY("has been successfully loaded into the cargo",10,50
+PrintStringXY("hold. The weather should be clear skies all",10,60
+PrintStringXY("the way to our destination.",10,70
+Pause 8000
+FillRectangle_NoClip(0,0,320,80
+PrintStringXY("CAPTAIN'S LOG - DAY 2",10,10
+PrintStringXY("USS Maguffin",10,20
+PrintStringXY("So far, so good. The forecast has changed to",10,40
+PrintStringXY("some scattered storms, but they shouldn't ",10,50
+PrintStringXY("affect our operations significantly.",10,60
+PrintStringXY("The fishsticks I ate upset my stomach.",10,70
+ScaledTransparentSprite_NoClip(3,160,80,1,1
+ScaledTransparentSprite_NoClip(3,220,100,1,1
+Pause 8000
+SetColor(191
+FillRectangle_NoClip(0,70,320,60
+SetColor(247
+FillRectangle_NoClip(0,0,320,80
+PrintStringXY("CAPTAIN'S LOG - DAY 3",10,10
+PrintStringXY("USS Maguffin",10,20
+PrintStringXY("We're halfway to our destination. The storm",10,40
+PrintStringXY("seems to be getting worse. The crew says that",10,50
+PrintStringXY("we should turn back, but I believe we can",10,60
+PrintStringXY("make it there safely.",10,70
+ScaledTransparentSprite_NoClip(3,150,80,1,1
+ScaledTransparentSprite_NoClip(3,100,100,1,1
+ScaledTransparentSprite_NoClip(3,200,80,2,2
+Pause 8000
+SetColor(191
+FillRectangle_NoClip(0,70,320,60
+SetColor(247
+FillRectangle_NoClip(0,0,320,80
+PrintStringXY("CAPTAIN'S LOG - DAY 4",10,10
+PrintStringXY("USS Maguffin",10,20
+PrintStringXY("I have begun to fear the worst. The ship",10,40
+PrintStringXY("is being tossed around in the storm. I ",10,50
+PrintStringXY("don't know how m\uch longer she can take it.",10,60
+PrintStringXY("This may be my last log entry.",10,70
+ScaledTransparentSprite_NoClip(3,10,80,3,2
+ScaledTransparentSprite_NoClip(3,170,80,3,2
+Pause 8000
+0->X
+While X<20
+	FillScreen(0
+	FillScreen(223
+	1+X->X
+End
+FillScreen(0
+Pause 8000
+FillScreen(191
+SetColor(24
+SetTextFGColor(223
+FillRectangle_NoClip(0,170,320,70
+PrintStringXY("You survived. The Ship Sunk.",2,230
+Call DRAW
+PrintStringXY("Your hands cling to a shipp\ing box.",2,230
+Call DRAW
+PrintStringXY("All of a sudden, a dot appears in the distance.",2,230
+SetColor(232
+FillRectangle_NoClip(160,168,2,2
+Call DRAW
+PrintStringXY("You float towards it, starting to see its shape.",2,230
+ScaledTransparentSprite_NoClip(1,155,152,1,1
+Call DRAW
+PrintStringXY("It's a Buoy!",2,230
+ScaledTransparentSprite_NoClip(1,150,135,2,2
+Call DRAW
+SetColor(24
+FillRectangle_NoClip(0,170,320,70
+PrintStringXY("You climb onto it.",2,230
+ScaledTransparentSprite_NoClip(4,120,75,2,2
+Pause 5000
+FillScreen(191
+SetColor(226
+FillRectangle_NoClip(10,10,300,220
+SetTextScale(2,2
+PrintStringXY("CONTROLS",80,15
+SetTextScale(1,1
+PrintStringXY("Use the ARROW KEYS to move the cursor",15,40
+PrintStringXY("Press CLEAR to exit while playing game",15,50
+PrintStringXY("Use the cursor to interact with objects",15,60
+PrintStringXY("Press ENTER to select item/button",15,70
+PrintStringXY("Press ENTER to continue while at menus",15,80
+Pause 
+Goto GAME
+Lbl DRAW
+[i]5000
+Pause 5000
+FillScreen(191
+SetColor(24
+SetTextFGColor(223
+FillRectangle_NoClip(0,170,320,70
+SetColor(171
+FillRectangle_NoClip(110,175,100,50
+Return
+[i]=========Start "Escape Game"==========
+Lbl GAME
+0->X->Y->A->V->Z+1->B
+FillScreen(191
+SetColor(24
+SetTextFGColor(223
+FillRectangle_NoClip(0,215,330,70
+ScaledTransparentSprite_NoClip(4,20,10,3,3
+SetColor(171
+FillRectangle_NoClip(200,170,50,50
+[i]=====Move Cursor=====
+50->X->Y
+While A!=15
+	If A!=B
+		SetColor(191
+		FillRectangle_NoClip(X-7,Y-7,6,25
+		FillRectangle_NoClip(X-7,Y-7,25,6
+		FillRectangle_NoClip(X,Y+19,24,6
+		FillRectangle_NoClip(X+18,Y,6,25
+		Rectangle_NoClip(X-1,Y-1,19,20
+		SetColor(24
+		SetTextFGColor(223
+		FillRectangle_NoClip(0,215,325,70
+		ScaledTransparentSprite_NoClip(4,20,8,3,3
+		SetColor(171
+		FillRectangle_NoClip(200,170,50,45
+		SetColor(0
+		FillRectangle_NoClip(130,0,190,15
+		SetColor(191
+		Line(211,0,211,14
+		Line(275,0,275,14
+		PrintStringXY("INVENTORY",135,5
+		PrintStringXY("USE ITEM",215,5
+		PrintStringXY("EXIT",282,5
+		SetTextBGColor(255
+		ScaledTransparentSprite_NoClip(5,X,Y,1,1
+		SetTextXY(0,220
+		PrintUInt(X,3
+		SetTextXY(40,220
+		PrintUInt(Y,3
+	End
+	A->B
+	getKey->A
+	If A=2
+		max(7,(X-6))->X
+	End
+	If A=3
+		min(313,(X+6))->X
+	End
+	If A=1
+		min(233,(Y+6))->Y
+	End
+	If A=4
+		max(7,(Y-6))->Y
+	End
+	If A!=B
+	ScaledTransparentSprite_NoClip(6,X,Y,1,1
+	End
+	[i]=====Show Info=====
+	SetTextXY(0,230
+	If X>=72 and X<=106
+		If Y>=8 and Y<=41
+			PrintString("It's an array of comm\unication equipment.")
+		If A=9 and L2(1)=0
+			FillScreen(191
+			SetColor(223
+			FillRectangle_NoClip(10,10,300,220
+			SetColor(24
+			FillRectangle_NoClip(0,215,325,70
+			PrintStringXY("The solar panel seems to be broken",0,230)
+			ScaledTransparentSprite_NoClip(8,110,80,5,5
+			Pause 
+			FillScreen(191
+			End
+			If L2(1)=1 and A=9
+			FillScreen(191
+			SetColor(223
+			FillRectangle_NoClip(10,10,300,220
+			SetColor(24
+			FillRectangle_NoClip(0,215,325,70
+			PrintStringXY("The solar panel is fixed!",0,230)
+			ScaledTransparentSprite_NoClip(8,110,80,5,5
+			Pause 
+			FillScreen(191
+			End
+		End
+	End
+	If X>=103 and X<=113
+		If Y>=56 and Y<=59
+			PrintString("A Label Reads: Call 1-800-BUOY-FIX for service")
+		End
+	End
+	If L1(5)=0
+		SetColor(41
+		FillRectangle(68,176,8,5
+	End
+	If X>=68 and X<=76
+		If Y>=176 and Y<=180
+			If L1(5)=0
+				PrintString("A quarter")
+				If A=9
+					SetColor(24
+					FillRectangle_NoClip(0,215,325,70
+					SetTextXY(0,230
+					PrintString("Picked it up! It doubles as a screwdriver!")
+					Pause 
+					1->L1(5)
+				End
+			End
+		End
+	End
+	If X>=196 and X<=244
+		If Y>=170 and Y<=214
+			PrintString("It's the shipp\ing crate you floated on")
+		If A=9 and L1(1)=0
+			FillScreen(191
+			SetColor(171
+			FillRectangle_NoClip(10,10,300,220
+			SetColor(24
+			FillRectangle_NoClip(0,215,325,70
+				ScaledTransparentSprite_NoClip(7,20,20,4,4
+				ScaledTransparentSprite_NoClip(10,70,20,4,4
+			PrintStringXY("You Find A Waterlogged TI-30 XIIS",0,220)
+			PrintStringXY("and Some Baking Soda",0,230)
+			Pause 
+				1->L1(1)
+				1->L1(4)
+			FillScreen(191
+		End
+		End
+	End
+	If X>=100 and X<=110
+		If Y>=107 and Y<=109
+			PrintString("A Label Reads: Press Button Below for SOS")
+		End
+	End
+	If X>=100 and X<=110
+		If Y>=110 and Y<=120
+			PrintString("It's the SOS button!")
+			If A=9 and L2(2)=0
+				SetColor(24
+				FillRectangle_NoClip(0,215,325,70
+				SetTextXY(0,230
+				PrintString("You Press It, Nothing Happens")
+				Pause 
+			End
+			If A=9 and L2(2)=1
+				SetColor(24
+				FillRectangle_NoClip(0,215,325,70
+				SetTextXY(0,230
+				PrintString("You Press It, Lights flash and alarms sound!")
+				Pause 
+				Goto WINN
+			End
+		End
+	End
+	If X>=68 and X<=89
+		If Y>=110 and Y<=123
+			PrintString("The Buoy's Registration Number, 137")
+		End
+	End
+	If X>=70 and X<=95
+		If Y>=59 and Y<=82
+			If L2(3)=0
+			PrintString("It's a hatch, but it's screwed on tight.")
+			End
+			If L2(3)=1
+			PrintString("It's a hatch.")
+			End
+			If A=9 and L2(3)=1
+				FillScreen(191
+				SetColor(24
+				FillRectangle_NoClip(0,215,325,70
+				SetTextXY(0,230
+				SetColor(231
+				FillRectangle_NoClip(10,10,300,220
+				SetColor(24
+				FillRectangle_NoClip(0,215,325,70
+				If L1(3)=0
+					PrintString("You open the hatch! You find a satellite phone!")
+					1->L1(3)
+					1->L2(4)
+					ScaledTransparentSprite_NoClip(9,60,20,10,10
+					Pause 
+				End
+				If L1(3)=1
+					FillScreen(191
+					SetColor(24
+					FillRectangle_NoClip(0,215,325,70
+					SetTextXY(0,230
+					SetColor(231
+					FillRectangle_NoClip(10,10,300,220
+					SetColor(0
+					FillRectangle_NoClip(200,30,100,85
+					SetColor(148
+					FillRectangle_NoClip(30,30,150,150
+					SetColor(24
+					FillRectangle_NoClip(0,215,325,70
+				If L2(1)=1
+					If L2(5)=0
+						SetTextFGColor(7
+						PrintStringXY("=Buoy OS=",205,35
+						SetTextFGColor(224
+						PrintStringXY("No Signal",205,45
+					End
+					If L2(5)=1 and L2(6)=0
+							SetTextFGColor(7
+							PrintStringXY("=Buoy OS=",205,35
+							SetTextFGColor(224
+							PrintStringXY("SOS Offline",205,45
+							PrintStringXY("Call BUOY FIX",205,55
+						End
+					If L2(5)=1 and L2(6)=1
+							SetTextFGColor(7
+							PrintStringXY("=Buoy OS=",205,35
+							PrintStringXY("SOS Online!",205,45
+							PrintStringXY("Press Button",205,55
+							1->L2(2)
+					End
+				End
+					SetTextFGColor(223
+					SetTextXY(0,220
+					If L2(5)=0
+						PrintString("Some wires inside are corroded."
+						SetColor(224
+						Line(30,30,50,180
+						SetColor(29
+						Line(100,30,120,180
+					End
+					If L2(1)=0
+					SetTextXY(0,230
+					PrintString("The computer is off"
+					End
+				End
+				Pause 
+				FillScreen(191
+			End
+		End
+	End
+	If X>=70 and X<=95
+		If Y>=83 and Y<=86
+			PrintString("The Label Reads: Maintenance Hatch")
+		End
+	End
+	If X>=19 and X<=165
+		If Y>=182 and Y<=214
+			PrintString("The flotation device that's part of the buoy.")
+		End
+	End
+	If X>=125 and X<=204
+		If Y>=0 and Y<=14
+			If A=9
+				Call INVE
+			End
+		End
+	End
+	If X>=208 and X<=269
+		If Y>=0 and Y<=14
+			If A=9
+				Call USEI
+				Call OPTI
+			End
+		End
+	End
+	If X>=272 and X<=314
+		If Y>=0 and Y<=14
+			If A=9
+				Goto STOP
+			End
+		End
+	End
+End
+Goto STOP
+[i]==========Inventory==========
+Lbl INVE
+FillScreen(191
+SetColor(226
+FillRectangle_NoClip(10,10,300,220
+SetColor(24
+FillRectangle_NoClip(0,215,325,70
+SetTextScale(2,2
+PrintStringXY("INVENTORY",80,15
+SetTextScale(1,1
+1->C+49->B
+SetTextXY(20,B)
+If L1(C)=1
+	PrintString("Package of Waterlogged TI-30 XIIS"
+	B+10->B
+	SetTextXY(20,B)
+End
+C+1->C
+[i]Wire was removed from the game. Please DO NOT REMOVE
+If L1(C)=1
+	PrintString("Wire"
+	B+10->B
+	SetTextXY(20,B)
+End
+C+1->C
+If L1(C)=1
+	PrintString("Emergency Satellite Phone"
+	B+10->B
+	SetTextXY(20,B)
+End
+C+1->C
+If L1(C)=1
+	PrintString("Baking Soda"
+	B+10->B
+	SetTextXY(20,B)
+End
+C+1->C
+If L1(C)=1
+	PrintString("Makeshift Screwdriver"
+	B+10->B
+	SetTextXY(20,B)
+End
+Pause 
+FillScreen(191)
+Return
+
+[i]==========Use Item==========
+Lbl OPTI
+While A!=15
+	If A!=B
+		SetColor(191
+		FillRectangle_NoClip(X-7,Y-7,6,25
+		FillRectangle_NoClip(X-7,Y-7,25,6
+		FillRectangle_NoClip(X,Y+19,24,6
+		FillRectangle_NoClip(X+18,Y,6,25
+		Rectangle_NoClip(X-1,Y-1,19,20
+		SetColor(24
+		SetTextFGColor(223
+		FillRectangle_NoClip(0,215,325,70
+		ScaledTransparentSprite_NoClip(4,20,8,3,3
+		SetColor(171
+		FillRectangle_NoClip(200,170,50,45
+		SetColor(0
+		FillRectangle_NoClip(130,0,190,15
+		SetColor(191
+		PrintStringXY("Select Place To Use Item",135,5
+		SetTextBGColor(255
+		ScaledTransparentSprite_NoClip(5,X,Y,1,1
+		SetTextXY(0,220
+		PrintUInt(X,3
+		SetTextXY(40,220
+		PrintUInt(Y,3
+	End
+	A->B
+	getKey->A
+	If A=2
+		max(7,(X-6))->X
+	End
+	If A=3
+		min(313,(X+6))->X
+	End
+	If A=1
+		min(233,(Y+6))->Y
+	End
+	If A=4
+		max(7,(Y-6))->Y
+	End
+	If A!=B
+	ScaledTransparentSprite_NoClip(6,X,Y,1,1
+	End
+	SetTextXY(0,230
+	If X>=72 and X<=106
+		If Y>=8 and Y<=41
+			PrintString("It's an array of comm\unication equipment.")
+			If A=9
+				If K=1 and L1(K)=1
+				SetColor(24
+				FillRectangle_NoClip(0,215,325,70
+				PrintStringXY("You used the TI-30XIIS's parts to fix it!",0,230)
+				1->L2(1)
+				Else
+				Call WITEM
+				End
+			Pause 
+			FillScreen(191
+			Goto GAME
+		End
+		End
+	End
+	If X>=103 and X<=113
+		If Y>=56 and Y<=59
+			PrintString("A Label Reads: Call 1-800-BUOY-FIX for service")
+			If A=9
+			If K=3 and L1(K)=1
+				SetColor(24
+				FillRectangle_NoClip(0,215,325,70
+				PrintStringXY("You call the service hotline and activate it!",0,230)
+				1->L2(6)
+			Else
+				Call WITEM
+			End
+			Pause 
+			FillScreen(191
+			Goto GAME
+			End
+		End
+	End
+	If X>=196 and X<=244
+		If Y>=170 and Y<=214
+			PrintString("It's the shipp\ing crate you floated on")
+		If A=9
+		End
+		End
+	End
+		If X>=100 and X<=110
+			If Y>=107 and Y<=109
+				PrintString("A Label Reads: Press Button Below for SOS")
+			End
+		End
+		If X>=100 and X<=110
+			If Y>=110 and Y<=120
+				PrintString("It's the SOS button!")
+			End
+		End
+		If X>=68 and X<=89
+			If Y>=110 and Y<=123
+				PrintString("The Buoy's Registration Number, 137")
+			End
+		End
+		If X>=70 and X<=95
+			If Y>=59 and Y<=82
+				If L2(3)=0
+					PrintString("It's a hatch, but it's screwed on tight.")
+				End
+				If L2(3)=1 and L1(3)=0
+					PrintString("It's a hatch.")
+				End
+				If L2(3)=1 and L1(3)=1
+					PrintString("The wires inside are corroded!.")
+				End
+				If A=9
+					If K=5 and L1(K)=1
+						SetColor(24
+						FillRectangle_NoClip(0,215,325,70
+						PrintStringXY("You use the screwdriver to open the hatch!",0,230)
+						1->L2(3)
+					End
+					If K=4 and L1(K)=1
+						SetColor(24
+						FillRectangle_NoClip(0,215,325,70
+						PrintStringXY("You use the baking soda to clean the wires!",0,230)
+						1->L2(5)
+					Else
+					Goto WITEM
+					End
+					Pause 
+					FillScreen(191
+					Goto WITEM
+				End
+			End
+		End
+		If X>=70 and X<=95
+			If Y>=83 and Y<=86
+				PrintString("The Label Reads: Maintenance Hatch")
+			End
+		End
+		If X>=19 and X<=165
+			If Y>=182 and Y<=214
+				PrintString("The flotation device that's part of the buoy.")
+			End
+		End
+	If A=9
+		Goto WITEM
+	End
+End
+Return
+[i]=====Use Item=====
+Lbl USEI
+0->A+1->K
+FillScreen(191
+SetColor(226
+FillRectangle_NoClip(10,10,300,220
+SetColor(24
+FillRectangle_NoClip(0,215,325,70
+While A!=9
+SetTextScale(2,2
+PrintStringXY("Which Item?",80,15
+SetTextScale(1,1
+1->C+49->B
+SetTextXY(20,B)
+If L1(C)=1
+	PrintString("1-Waterlogged TI-30 XIIS"
+	B+10->B
+	SetTextXY(20,B)
+	End
+[i]Wire was removed from the game. Please DO NOT REMOVE
+C+1->C
+If L1(C)=1
+	PrintString("2-Wire"
+	B+10->B
+	SetTextXY(20,B)
+End
+C+1->C
+If L1(C)=1
+	PrintString("3-Emergency Satellite Phone"
+	B+10->B
+	SetTextXY(20,B)
+End
+C+1->C
+If L1(C)=1
+	PrintString("4-Baking Soda"
+	B+10->B
+	SetTextXY(20,B)
+End
+C+1->C
+If L1(C)=1
+	PrintString("5-Makeshift Screwdriver"
+	B+10->B
+	SetTextXY(20,B)
+End
+PrintStringXY("Item Number:",20,140
+SetTextXY(110,140
+PrintUInt(K,2
+getKey->A
+	If A=4
+		min(10,(K+1))->K
+		SetColor(226
+		FillRectangle_NoClip(10,10,300,220
+		SetColor(24
+		FillRectangle_NoClip(0,215,325,70
+	End
+	If A=1
+		max(1,(K-1))->K
+		SetColor(226
+		FillRectangle_NoClip(10,10,300,220
+		SetColor(24
+		FillRectangle_NoClip(0,215,325,70
+	End
+End
+FillScreen(191
+Return
+
+[i]==========Wrong Item==========
+Lbl WITEM
+FillScreen(191
+SetColor(24
+FillRectangle_NoClip(0,215,325,70
+SetTextXY(0,230
+PrintString("You Can't Use That Here!")
+Goto GAME
+
+[i]==========WIN GAME==========
+Lbl WINN
+FillScreen(0
+FillScreen(191
+SetColor(24
+FillRectangle_NoClip(0,200,320,40
+ScaledTransparentSprite_NoClip(0,10,145,2,2
+SetColor(247
+FillRectangle_NoClip(0,0,320,80
+SetTextFGColor(0
+SetTextScale(1,1
+PrintStringXY("CAPTAIN'S LOG",10,10
+PrintStringXY("USS Maguffin",10,20
+PrintStringXY("I was successfully rescued by the Coast",10,40
+PrintStringXY("Guard and was treated for my malnourishment",10,50
+PrintStringXY("and other injuries. Luckily, most of my crew",10,60
+PrintStringXY("survived, but some didn't.",10,70
+Pause 8000
+FillRectangle_NoClip(0,0,320,80
+PrintStringXY("CAPTAIN'S LOG",10,10
+PrintStringXY("USS Maguffin",10,20
+PrintStringXY("I have sent my regards to the families of",10,40
+PrintStringXY("the lost crewmen and now keep them in my",10,50
+PrintStringXY("prayers. The Maguffin was salvaged and",10,60
+PrintStringXY("repaired. I was reinstated as captain.",10,70
+Pause 8000
+FillRectangle_NoClip(0,0,320,80
+PrintStringXY("CAPTAIN'S LOG",10,10
+PrintStringXY("USS Maguffin",10,20
+PrintStringXY("Now I know that I m\ust have better ",10,40
+PrintStringXY("judgement when there may be danger up ",10,50
+PrintStringXY("ahead. I pray for safe travels.",10,60
+PrintStringXY("-Captain West",10,70
+Pause 8000
+FillScreen(191
+SetColor(24
+FillRectangle_NoClip(0,200,320,40
+ScaledTransparentSprite_NoClip(1,190,146,3,3
+SetTextFGColor(7
+SetTextScale(4,4
+PrintStringXY("YOU WIN!",70,80
+SetTextScale(1,1
+PrintStringXY("YEAH BUOOOOOYYYYYYYYYY!",70,70
+Pause 
+Goto TITLE
+[i]==========Exit==========
+Lbl STOP
+15->A
+det(1
