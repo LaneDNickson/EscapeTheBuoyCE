@@ -1,4 +1,4 @@
-# EscapeTheBuoyCE
+# Escape The Buoy CE
 An escape-themed game for the TI-84 Plus CE
 
 ![Game GIF](https://oldnewtimer.github.io/images/etb.gif)
